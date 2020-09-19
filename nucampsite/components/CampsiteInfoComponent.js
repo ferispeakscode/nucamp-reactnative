@@ -13,6 +13,7 @@ const mapStateToProps = state => {
     };
 };
 
+//dispatch reducers using thunk
 const mapDispatchToProps = {
     postFavorite: campsiteId => (postFavorite(campsiteId)),
     postComment: (campsiteId, rating, author, text) => (postComment(campsiteId, rating, author, text))
