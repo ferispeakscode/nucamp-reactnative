@@ -6,7 +6,6 @@ import About from './AboutComponent';
 import Contact from './ContactComponent';
 import { View, Platform } from 'react-native';
 import { createStackNavigator, createDrawerNavigator } from 'react-navigation';
-import ExpoStatusBar from 'expo-status-bar/build/ExpoStatusBar';
 
 const DirectoryNavigator = createStackNavigator(
     {
