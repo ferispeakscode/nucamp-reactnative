@@ -6,6 +6,15 @@ import About from './AboutComponent';
 import Contact from './ContactComponent';
 import { View, Platform } from 'react-native';
 import { createStackNavigator, createDrawerNavigator } from 'react-navigation';
+import { connect } from 'react-redux';
+import { fetchCampsites, fetchComments, fetchPromotions, fetchPartners } from '../redux/ActionCreators';
+
+const mapDispatchToProps = {
+    fetchCampsites,
+    fetchComments,
+    fetchPromotions,
+    fetchPartners
+};
 
 const DirectoryNavigator = createStackNavigator(
     {
@@ -94,6 +103,14 @@ const MainNavigator = createDrawerNavigator(
 );
 
 class Main extends Component {
+
+    componentDidMount() {
+        this.props.fetchCampsites();
+        this.props.fetchComments();
+        this.props.fetchPromotions();
+        this.props.fetchPartners();
+    }
+
     render() {
         return (
             <View style={{
@@ -106,4 +123,4 @@ class Main extends Component {
     }
 }
 
-export default Main;
+export default connect(null, mapDispatchToProps)(Main);
