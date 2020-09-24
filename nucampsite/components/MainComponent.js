@@ -151,7 +151,18 @@ const MainNavigator = createDrawerNavigator(
         },
         About: { 
             screen: AboutNavigator,
-            navigationOptions: { title: 'About Us'} },
+            navigationOptions: { 
+                drawerLabel: 'About Us',
+                drawerIcon: ({tintcolor}) => (
+                    <Icon 
+                        name='info'
+                        type='font-awesome'
+                        size={24}
+                        color={tintcolor}
+                    />
+                )
+            }
+        },
         Contact: { 
             screen: ContactNavigator,
             navigationOptions: { title: 'Contact Us'} }
