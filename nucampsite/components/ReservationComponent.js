@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, StyleSheet, Picker, Switch, Button, Modal } from 'react-native';
+import { Text, View, StyleSheet, Picker, Switch, Button, Alert } from 'react-native';
 import DatePicker from 'react-native-datepicker';
 import * as Animatable from 'react-native-animatable';
 
@@ -12,7 +12,7 @@ class Reservation extends Component {
             campers: 1,
             hikeIn: false,
             date: '',
-            showModal: false
+            // showModal: false
         };
     }
 
@@ -20,13 +20,32 @@ class Reservation extends Component {
         title: 'Reserve Campsite'
     }
 
-    toggleModal() {
-        this.setState({showModal: !this.state.showModal});
-    }
+    // toggleModal() {
+    //     this.setState({showModal: !this.state.showModal});
+    // }
 
-    handleReservation() {
-        console.log(JSON.stringify(this.state));
-        this.toggleModal();
+    // handleReservation() {
+    //     console.log(JSON.stringify(this.state));
+    //     this.toggleModal();
+    // }
+
+    submitForm = () => {
+        Alert.alert(
+            "Begin Search?",
+            `Number of Campers: ${this.state.campers}\n\nHike-In? ${this.state.hikeIn}\n\nDate: ${this.state.date}`,
+            [
+                {
+                    text: "Cancel",
+                    onPress: () => this.resetForm(),
+                    style: "cancel"
+                },
+                {
+                    text: "OK",
+                    onPress: () => this.resetForm()
+                }
+            ],
+            { cancelable: false }
+        );
     }
 
 
@@ -35,11 +54,31 @@ class Reservation extends Component {
             campers: 1,
             hikeIn: false,
             date: '',
-            showModal: false
+            // showModal: false
         });
     }
 
     render() {
+
+        // const submitForm = (props) => 
+        //     Alert.alert(
+        //         "Begin Search?",
+        //         "Number of Campers: {$this.state.campers}\nHike-In? {this.state.hikeIn}\nDate: {this.state.date}",
+        //         [
+        //             {
+        //                 text: "Cancel",
+        //                 onPress: () => this.resetForm(),
+        //                 style: "cancel"
+        //             },
+        //             {
+        //                 text: "OK",
+        //                 onPress: () => this.resetForm()
+        //             }
+        //         ],
+        //         { cancelable: false }
+        //     );
+
+
         return (
             <Animatable.View animation='zoomIn' duration={2000} delay={1000}>
                 <View style={styles.formRow}>
@@ -92,13 +131,14 @@ class Reservation extends Component {
                 </View>
                 <View style={styles.formRow}>
                     <Button
-                        onPress={() => this.handleReservation()}
+                        // onPress={() => this.handleReservation()}
+                        onPress={() => this.submitForm()}
                         title='Search'
                         color='#5637DD'
                         accessibilityLabel='Tap me to search for available campsites to reserve'
                     />
                 </View>
-                <Modal
+                {/* <Modal
                     animationType={'slide'}
                     transparent={false}
                     visible={this.state.showModal}
@@ -117,7 +157,7 @@ class Reservation extends Component {
                             title='Close'
                         />
                     </View>
-                </Modal>
+                </Modal> */}
             </Animatable.View>
         );
     }
