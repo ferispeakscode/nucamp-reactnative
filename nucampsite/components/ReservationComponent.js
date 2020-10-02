@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Text, View, StyleSheet, Picker, Switch, Button, Alert } from 'react-native';
 import DatePicker from 'react-native-datepicker';
 import * as Animatable from 'react-native-animatable';
+import * as Permissions from 'expo-permissions';
+import { Notifications } from 'expo';
 
 class Reservation extends Component {
 
@@ -31,7 +33,10 @@ class Reservation extends Component {
                 },
                 {
                     text: "OK",
-                    onPress: () => this.resetForm()
+                    onPress: () => {
+                        this.presentLocalNotification(this.state.date);
+                        this.resetForm();
+                    }
                 }
             ],
             { cancelable: false }
@@ -45,6 +50,35 @@ class Reservation extends Component {
             hikeIn: false,
             date: '',
         });
+    }
+
+    //asynchronous function
+    //returns value wrapped in a promise that resolves to desired value
+    async obtainNotificationPermission() {
+        //await is a JS keyword, can only be used inside async function
+        //getAsync() checks if permission has been granted, returns a promise, type of permission desired taken as parameter (constant)
+        const permission = await Permissions.getAsync(Permissions.USER_FACING_NOTIFICATIONS);
+        if (permission.status !== 'granted') {
+            //askAsync() asks for permission to be granted
+            const permission = await Permissions.askAsync(Permissions.USER_FACING_NOTIFICATIONS);
+            if (permission.status !== 'granted') {
+                Alert.alert('Permission not granted to show notification');
+            }
+            return permission;
+        }
+        return permission;
+    }
+
+    //date = date selected in form
+    async presentLocalNotification(date) {
+        //needs "this" keyword to access method defined within same class
+        const permission = await this.obtainNotificationPermission();
+        if (permission.status === 'granted') {
+            Notifications.presentLocalNotificationAsync({
+                title: 'Your Campsite Reservation Search',
+                body: 'Search for ' + date + ' requested'
+            });
+        }
     }
 
     render() {
