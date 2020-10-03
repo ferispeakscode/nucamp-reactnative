@@ -192,7 +192,7 @@ const LoginNavigator = createStackNavigator(
 const CustomDrawerContentComponent = props => (
     <ScrollView>
         <SafeAreaView
-            style={StyleSheet.container}
+            style={styles.container}
             forceInset={{top: 'always', horizontal: 'never'}}>
             <View style={styles.drawerHeader}>
                 <View style={{flex: 1}}>
@@ -379,7 +379,7 @@ class Main extends Component {
 }
 
 const styles = StyleSheet.create({
-    conatiner: {
+    container: {
         flex: 1,
     },
     drawerHeader: {
