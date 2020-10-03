@@ -98,7 +98,7 @@ class LoginTab extends Component {
                 </View>
                 <View style={styles.formButton}>
                     <Button
-                        onPress={() => this.props.nagivation.navigate('Register')} //same as {navigation}
+                        onPress={() => this.props.navigation.navigate('Register')} //same as {navigation}
                         title='Register'
                         type='clear'
                         icon={
@@ -168,6 +168,7 @@ class RegisterTab extends Component {
                 allowsEditing: true,
                 aspect: [1, 1]
             });
+
             if (!capturedImage.cancelled) {
                 console.log(capturedImage);
                 this.processImage(capturedImage.uri);
