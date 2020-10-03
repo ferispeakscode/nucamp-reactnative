@@ -155,7 +155,21 @@ class RegisterTab extends Component {
             });
             if (!capturedImage.cancelled) {
                 console.log(capturedImage);
-                //this.setState({imageUrl: capturedImage.uri})
+                this.processImage(capturedImage.uri);
+            }
+        }
+    }
+
+    getImageFromGallery = async () => {
+        const cameraRollPermissions = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+       
+        if (cameraRollPermissions.status === 'granted') {
+            const capturedImage = await ImagePicker.launchImageLibraryAsync({
+                allowsEditing: true,
+                aspect: [1, 1]
+            });
+            if (!capturedImage.cancelled) {
+                console.log(capturedImage);
                 this.processImage(capturedImage.uri);
             }
         }
@@ -170,6 +184,8 @@ class RegisterTab extends Component {
         console.log(processedImage);
         this.setState({imageUrl: processedImage.uri})
     }
+
+
 
     handleRegister() {
         console.log(JSON.stringify(this.state));
@@ -188,15 +204,19 @@ class RegisterTab extends Component {
             <ScrollView>
                  <View style={styles.container}>
                      <View style={styles.imageContainer}>
-                         <Image
+                        <Image
                             source={{uri: this.state.imageUrl}}
                             loadingIndicatorSource={require('./images/logo.png')}
                             style={styles.image}
-                         />
-                         <Button
+                        />
+                        <Button
                             title='Camera'
                             onPress={this.getImageFromCamera} //improved way to call event handler when parameters not needed, but function will need to be bound via bind or written as arrow function
-                         />
+                        />
+                        <Button 
+                            title='Gallery'
+                            onPress={this.getImageFromGallery}
+                        />
                      </View>
                     <Input
                         placeholder='Username'
